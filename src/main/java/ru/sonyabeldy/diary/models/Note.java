@@ -1,32 +1,30 @@
 package ru.sonyabeldy.diary.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "day")
+@Table(name = "note")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Day {
+public class Note {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "text")
+    private String text;
 
     @Column(name = "date")
     private Date date;
-
-    @Column(name = "note")
-    private String note;
-
-    @OneToMany(mappedBy = "day")
-    private List<Task> tasks;
 }
