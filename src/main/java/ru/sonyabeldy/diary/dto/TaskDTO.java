@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,6 +14,6 @@ import lombok.Setter;
 @Setter
 public class TaskDTO {
     private String text;
-    private DayDTO day;
+    private Date date;
     private boolean isCompleted;
 }
