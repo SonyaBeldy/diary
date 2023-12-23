@@ -2,10 +2,9 @@ package ru.sonyabeldy.diary.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.sonyabeldy.diary.dto.TaskDTO;
 import ru.sonyabeldy.diary.models.Task;
 import ru.sonyabeldy.diary.services.TaskService;
@@ -31,8 +30,26 @@ public class TaskController {
     }
 
     @GetMapping("/{date}")
-    private List<TaskDTO> findByDay(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+    private List<TaskDTO> findAllByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         return taskService.findAllByDate(date).stream().map(this::convertToTaskDTO).collect(Collectors.toList());
+    }
+
+    @PostMapping("/new")
+    private ResponseEntity<HttpStatus> create(@RequestBody TaskDTO taskDTO) {
+        taskService.save(convertToTask(taskDTO));
+        return ResponseEntity.ok(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/update")
+    private ResponseEntity<HttpStatus> update(@RequestBody TaskDTO taskDTO) {
+        taskService.save(convertToTask(taskDTO));
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    private ResponseEntity<HttpStatus> delete(@RequestBody TaskDTO taskDTO) {
+        taskService.delete(convertToTask(taskDTO));
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     private Task convertToTask(TaskDTO taskDTO) {
