@@ -25,8 +25,9 @@ public class TaskController {
     }
 
     @GetMapping
-    private List<TaskDTO> findAll() {
-        return taskService.findAll().stream().map(this::convertToTaskDTO).collect(Collectors.toList());
+    private ResponseEntity<List<TaskDTO>> findAll() {
+        List<TaskDTO> tasks = taskService.findAll().stream().map(this::convertToTaskDTO).collect(Collectors.toList());
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
     @GetMapping("/{date}")
